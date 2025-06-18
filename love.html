@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta con Medusas</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* CIERRE DE LA CARTA (inicialmente enrollada) */
+    .letter {
+      position: relative;
+      width: 90%; /* Ajustar a un porcentaje para que se vea bien en pantallas pequeñas */
+      height: 0;
+      background: rgba(0, 0, 0, 0.6); /* Fondo translúcido oscuro */
+      margin: 10vh auto;
+      transition: height 1s ease-out;
+      z-index: 5;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      border-radius: 15px;
+      backdrop-filter: blur(15px); /* Desenfoque del fondo para resaltar el texto */
+      border: 3px solid rgba(255, 255, 255, 0.3); /* Bordes suaves */
+      cursor: pointer;
+    }
+
+    .letter.open {
+      height: 70vh; /* Tamaño cuando la carta se despliega */
+    }
+
+    /* Medusas */
+    .jellyfish {
+      position: absolute;
+      width: 30px;
+      height: 40px;
+      opacity: 0.8;
+      z-index: 4;
+      visibility: hidden;
+      animation: floatUp 15s linear infinite; /* Solo hacia arriba */
+      filter: blur(1px);
+    }
+
+    .jelly-head {
+      width: 30px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(0, 255, 255, 0.7); /* Azul translúcido */
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 25px rgba(0, 255, 255, 0.8);
+    }
+
+    .tentacle {
+      position: absolute;
+      width: 4px;
+      height: 20px;
+      background: rgba(0, 255, 255, 0.8);
+      bottom: 0;
+      border-radius: 8px;
+      animation: tentacleMovement 1.5s ease-in-out infinite;
+    }
+
+    .tentacle:nth-child(1) {
+      left: 2px;
+    }
+
+    .tentacle:nth-child(2) {
+      left: 8px;
+    }
+
+    .tentacle:nth-child(3) {
+      left: 15px;
+    }
+
+    .tentacle:nth-child(4) {
+      left: 22px;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+        visibility: visible;
+      }
+      100% {
+        transform: translateY(-100vh); /* Subir hacia arriba */
+      }
+    }
+
+    @keyframes tentacleMovement {
+      0% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(10deg);
+      }
+      100% {
+        transform: rotate(0deg);
+      }
+    }
+
+    /* Estilo del texto dentro de la carta */
+    .letter .content {
+      color: #fff;
+      text-align: center;
+      padding: 30px;
+      font-size: 1.2em;
+      background: rgba(0, 0, 0, 0.6); /* Fondo oscuro translúcido */
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      font-style: italic;
+      display: none;
+    }
+
+    .letter.open .content {
+      display: block;
+    }
+
+    /* Mensaje para abrir la carta */
+    .open-message {
+      color: white;
+      font-size: 1.5em;
+      position: absolute;
+      bottom: 15px;
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      opacity: 0.8;
+      cursor: pointer;
+    }
+
+    .letter.open .open-message {
+      display: none; /* Ocultar el mensaje cuando la carta se abre */
+    }
+
+    /* Responsividad: Ajustes para pantallas pequeñas */
+    @media (max-width: 600px) {
+      .letter {
+        width: 95%;
+      }
+
+      .letter.open {
+        height: 80vh;
+      }
+
+      .content {
+        font-size: 1em;
+        padding: 20px;
+      }
+
+      .open-message {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Carta -->
+  <div class="letter" onclick="toggleLetter()">
+    <div class="open-message">
+      Haz clic para abrir la carta
+    </div>
+    <div class="content">
+      <h1>Para mi Andy</h1>
+      <p>Desde que te conozco, eres una niña muy especial para mí. Sé que nunca terminamos bien, pero siempre nos volvemos a encontrar. Y eso... o es que tenemos mucha conexión, o estamos muy tontos.</p>
+      <p>A pesar de todo, siempre te termino encontrando en nuestras canciones y en lo que te gusta. Siempre serás una niña muy especial para mí, siempre serás tú y siempre seré yo.</p>
+      <p>Solo quiero que sepas que eres una niña muy lista. Que sigas adelante a pesar de todo. Si realmente nos dejamos de hablar, solo quiero que sobresalgas y sigas luchando, porque necesitas seguir: te queda mucho por delante, yo lo sé.</p>
+      <p>Solo quiero que, cuando pregunten por ti, me digan que lograste todo lo que un día soñaste. Que seas la mejor tía. Sé que tienes tus caídas y que a veces no te dan ganas de seguir, pero ya terminaste la prepa y no te hiciste para atrás, a pesar de todo. Y eso habla mucho de ti.</p>
+      <p>Sigue adelante, por favor. No te apagues. Porque, a pesar de todo, te quise, te empecé a amar, te amé, te amo y te amaré. Siempre estaré para ti. Solo pon “mi pollito” y sabré que me necesitas, y haré lo posible para ayudarte, porque lo que menos quiero es que tú desistas.</p>
+      <p>Te amo, mi morenita hermosa. En serio, espero que logres todo.</p>
+      <p><strong>Con todo mi amor,</strong><br>Pollito</p>
+    </div>
+  </div>
+
+  <script>
+    // Función para abrir y cerrar la carta
+    function toggleLetter() {
+      const letter = document.querySelector('.letter');
+      letter.classList.toggle('open');
+      if (letter.classList.contains('open')) {
+        createJellyfish(); // Crear medusas cuando la carta se abre
+      }
+    }
+
+    const colors = ['#00ffff', '#ff69b4', '#ffcc00', '#00ff99', '#ff3366'];
+    const total = 10; // Número de medusas
+
+    // Función para crear las medusas
+    function createJellyfish() {
+      for (let i = 0; i < total; i++) {
+        const jelly = document.createElement('div');
+        jelly.className = 'jellyfish';
+        jelly.style.left = `${Math.random() * 100}vw`; // Posición aleatoria horizontalmente
+        jelly.style.top = `${100 + Math.random() * 20}vh`; // Aparecen un poco debajo de la pantalla
+        jelly.style.animationDuration = `${15 + Math.random() * 5}s`; // Velocidad aleatoria
+
+        const head = document.createElement('div');
+        head.className = 'jelly-head';
+
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        head.style.background = color;
+        head.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+
+        jelly.appendChild(head);
+
+        // Añadir tentáculos
+        for (let j = 0; j < 4; j++) {
+          const tentacle = document.createElement('div');
+          tentacle.className = 'tentacle';
+          head.appendChild(tentacle);
+        }
+
+        document.body.appendChild(jelly);
+      }
+    }
+  </script>
+
+</body>
+</html>
